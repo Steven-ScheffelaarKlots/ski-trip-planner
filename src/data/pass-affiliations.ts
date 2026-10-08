@@ -47,6 +47,7 @@ export const PASS_AFFILIATIONS: PassAffiliation[] = [
   days('pico', 'ikon', 7, IKON, 'Shared with Killington'),
   days('sunday-river', 'ikon', 7, IKON),
   days('loon', 'ikon', 7, IKON),
+  days('sugarloaf', 'ikon', 7, IKON),
   days('cranmore', 'ikon', 2, IKON, 'Bonus mountain'),
 
   // Epic Pass
@@ -74,4 +75,9 @@ export const PASS_AFFILIATIONS: PassAffiliation[] = [
   days('tenney', 'indy', 2, INDY, INDY_NOTES),
   days('waterville-valley', 'indy', 2, INDY, INDY_NOTES),
   days('whaleback', 'indy', 2, INDY, INDY_NOTES),
+  days('saddleback', 'indy', 2, INDY, INDY_NOTES),
+  days('mount-abram', 'indy', 2, INDY, INDY_NOTES),
+  days('black-mountain-me', 'indy', 2, INDY, INDY_NOTES),
+  days('big-moose', 'indy', 2, INDY, INDY_NOTES),
+  days('camden-snow-bowl', 'indy', 2, INDY, INDY_NOTES),
 ];
