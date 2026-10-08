@@ -18,3 +18,10 @@ Design: `docs/superpowers/specs/2026-10-08-ski-resort-mvp-design.md`
 
 Add an object to the matching file in `src/data/resorts/`, add any pass entries to
 `src/data/pass-affiliations.ts`, and run `npm test`. Omit any value you cannot verify.
+
+## Run with Docker
+
+```bash
+docker build -t ski-trip-planner .
+docker run --rm -p 3000:3000 ski-trip-planner   # http://localhost:3000
+```
