@@ -1,32 +1,68 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { FilterPanel } from '@/components/filters/FilterPanel';
 import ResortMap from '@/components/map/ResortMap';
 import { ResortDetails } from '@/components/resorts/ResortDetails';
+import { ResortList } from '@/components/resorts/ResortList';
 import { PASS_AFFILIATIONS } from '@/data/pass-affiliations';
 import { PASSES } from '@/data/passes';
 import { RATINGS } from '@/data/ratings';
 import { RESORTS } from '@/data/resorts';
+import { useResortFilters } from '@/hooks/useResortFilters';
 import { CURRENT_SEASON } from '@/lib/config';
-import { affiliationsFor } from '@/lib/resort';
+import { applyFilters } from '@/lib/filters/apply';
+import { buildFilters } from '@/lib/filters/definitions';
+import { EMPTY_TRAVEL, type FilterContext } from '@/lib/filters/types';
+import { affiliationsFor, buildPassIndex } from '@/lib/resort';
+import { sortResorts, type SortKey } from '@/lib/sort';
 
 const PASS_NAMES: ReadonlyMap<string, string> = new Map(PASSES.map((p) => [p.id, p.name]));
+const PASS_INDEX = buildPassIndex(PASS_AFFILIATIONS, CURRENT_SEASON);
+const FILTER_DEFS = buildFilters(RESORTS, PASSES);
 const DETAILS_WIDTH = 400;
 
 export default function ResortExplorer() {
+  const filters = useResortFilters(FILTER_DEFS);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const selected = RESORTS.find((r) => r.id === selectedId) ?? null;
+  const [sortKey, setSortKey] = useState<SortKey>('distance');
+
+  const travel = EMPTY_TRAVEL;
+  const ctx = useMemo<FilterContext>(() => ({ travel, passesByResort: PASS_INDEX }), [travel]);
+  const filtered = useMemo(() => applyFilters(RESORTS, FILTER_DEFS, filters.state, ctx), [filters.state, ctx]);
+  const sorted = useMemo(() => sortResorts(filtered, sortKey, travel), [filtered, sortKey, travel]);
+
+  // A selection hidden by the filters closes its details.
+  const selected = filtered.find((r) => r.id === selectedId) ?? null;
 
   return (
     <div className="grid h-dvh grid-cols-[360px_1fr]">
-      <aside className="overflow-y-auto border-r p-4">
+      <aside className="space-y-6 overflow-y-auto border-r p-4">
         <h1 className="text-lg font-semibold">New England Ski Resorts</h1>
-        <p className="text-sm text-muted-foreground">{RESORTS.length} resorts</p>
+        <FilterPanel
+          defs={FILTER_DEFS}
+          state={filters.state}
+          onChange={filters.setValue}
+          onClear={filters.clear}
+          activeCount={filters.activeCount}
+          hasLocation={travel.size > 0}
+        />
+        <ResortList
+          resorts={sorted}
+          selectedId={selected?.id ?? null}
+          onSelect={setSelectedId}
+          travel={travel}
+          passIndex={PASS_INDEX}
+          passNames={PASS_NAMES}
+          sortKey={sortKey}
+          onSortChange={setSortKey}
+          onClearFilters={filters.clear}
+        />
       </aside>
 
       <main className="relative">
         <ResortMap
-          resorts={RESORTS}
+          resorts={filtered}
           selected={selected}
           onSelect={setSelectedId}
           focusPadding={{ right: selected ? DETAILS_WIDTH : 0 }}
