@@ -49,6 +49,8 @@ export const PASS_AFFILIATIONS: PassAffiliation[] = [
   days('loon', 'ikon', 7, IKON),
   days('sugarloaf', 'ikon', 7, IKON),
   days('cranmore', 'ikon', 2, IKON, 'Bonus mountain'),
+  days('jiminy-peak', 'ikon', 2, IKON, 'Bonus mountain'),
+  days('butternut', 'ikon', 2, IKON, 'Bonus mountain'),
 
   // Epic Pass
   unlimited('stowe', 'epic', EPIC),
@@ -80,4 +82,9 @@ export const PASS_AFFILIATIONS: PassAffiliation[] = [
   days('black-mountain-me', 'indy', 2, INDY, INDY_NOTES),
   days('big-moose', 'indy', 2, INDY, INDY_NOTES),
   days('camden-snow-bowl', 'indy', 2, INDY, INDY_NOTES),
+  days('berkshire-east', 'indy', 2, INDY, INDY_NOTES),
+  days('bousquet', 'indy', 2, INDY, INDY_NOTES),
+  days('catamount', 'indy', 2, INDY, INDY_NOTES),
+  days('mohawk-mountain', 'indy', 2, INDY, INDY_NOTES),
+  days('powder-ridge', 'indy', 2, INDY_2627_ADDITIONS, INDY_NOTES),
 ];
