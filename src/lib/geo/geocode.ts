@@ -5,6 +5,9 @@ export type ZipTable = Record<string, [number, number]>;
 
 export type ZipResult = { ok: true; zip: string; coords: LatLng } | { ok: false; error: string };
 
+/** New England ZIP prefixes 010–069 (MA, RI, NH, ME, VT, CT). */
+const NEW_ENGLAND_ZIP = /^0[1-6]\d{3}$/;
+
 export function normalizeZip(input: string): string | null {
   const match = input.trim().match(/^(\d{5})(?:-\d{4})?$/);
   return match ? match[1] : null;
@@ -14,6 +17,13 @@ export function resolveZip(input: string, table: ZipTable): ZipResult {
   const zip = normalizeZip(input);
   if (!zip) return { ok: false, error: 'Enter a 5-digit ZIP code.' };
   const entry = table[zip];
+  if (!entry && NEW_ENGLAND_ZIP.test(zip)) {
+    // Census ZCTAs omit PO-box-only ZIPs, which are common in rural New England.
+    return {
+      ok: false,
+      error: `We don't have a location for ZIP ${zip} (it may be a PO box). Try a nearby ZIP or use your location.`,
+    };
+  }
   if (!entry) {
     return { ok: false, error: "That ZIP isn't in New England. Enter a New England ZIP or use your location." };
   }

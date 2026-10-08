@@ -40,6 +40,11 @@ describe('resorts', () => {
     if (r.stats.verticalFt !== undefined) expect(r.stats.verticalFt).toBeGreaterThanOrEqual(MIN_VERTICAL_FT);
     if (r.stats.summitElevationFt !== undefined && r.stats.baseElevationFt !== undefined) {
       expect(r.stats.summitElevationFt).toBeGreaterThan(r.stats.baseElevationFt);
+      // Shown side by side in the details panel, so they must not visibly contradict each other.
+      if (r.stats.verticalFt !== undefined) {
+        const gap = Math.abs(r.stats.summitElevationFt - r.stats.baseElevationFt - r.stats.verticalFt);
+        expect(gap, 'summit − base should match vertical within 100 ft').toBeLessThanOrEqual(100);
+      }
     }
 
     if (r.terrain) {

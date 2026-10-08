@@ -25,6 +25,13 @@ describe('resolveZip', () => {
     expect(resolveZip('1760', table)).toEqual({ ok: false, error: 'Enter a 5-digit ZIP code.' });
   });
 
+  it('explains a New England ZIP that has no location (e.g. PO-box only)', () => {
+    expect(resolveZip('05402', table)).toEqual({
+      ok: false,
+      error: "We don't have a location for ZIP 05402 (it may be a PO box). Try a nearby ZIP or use your location.",
+    });
+  });
+
   it('explains a ZIP outside New England', () => {
     expect(resolveZip('10001', table)).toEqual({
       ok: false,
