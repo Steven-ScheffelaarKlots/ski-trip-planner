@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { EMPTY_TRAVEL } from '@/lib/filters/types';
-import { straightLineEstimator, type TravelEstimator } from '@/lib/geo/travel';
+import { driveTimeEstimator } from '@/lib/geo/drive-time';
+import type { TravelEstimator } from '@/lib/geo/travel';
 import type { UserLocation } from '@/lib/geo/stored-location';
 import type { SkiResort, TravelEstimate } from '@/lib/types';
 
@@ -10,7 +11,7 @@ type Result = { origin: UserLocation; estimates: ReadonlyMap<string, TravelEstim
 export function useTravelEstimates(
   location: UserLocation | null,
   resorts: SkiResort[],
-  estimator: TravelEstimator = straightLineEstimator,
+  estimator: TravelEstimator = driveTimeEstimator,
 ): ReadonlyMap<string, TravelEstimate> {
   const [result, setResult] = useState<Result | null>(null);
 

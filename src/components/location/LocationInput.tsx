@@ -10,12 +10,14 @@ type Props = {
   location: UserLocation | null;
   error: string | null;
   locating: boolean;
+  /** Explains where drive times come from. */
+  note?: string;
   onZip: (zip: string) => void;
   onLocate: () => void;
   onClear: () => void;
 };
 
-export function LocationInput({ location, error, locating, onZip, onLocate, onClear }: Props) {
+export function LocationInput({ location, error, locating, note, onZip, onLocate, onClear }: Props) {
   const [zip, setZip] = useState('');
 
   return (
@@ -61,7 +63,7 @@ export function LocationInput({ location, error, locating, onZip, onLocate, onCl
           {error}
         </p>
       )}
-      {location && <p className="text-xs text-muted-foreground">Distances are straight-line, not driving.</p>}
+      {location && note && <p className="text-xs text-muted-foreground">{note}</p>}
     </div>
   );
 }

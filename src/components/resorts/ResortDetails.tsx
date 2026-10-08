@@ -2,7 +2,7 @@ import { ExternalLink, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { TerrainBar } from '@/components/resorts/TerrainBar';
-import { formatCoords, formatMiles, passAccessLabel, withUnit, yesNo } from '@/lib/format';
+import { describeTravel, formatCoords, passAccessLabel, withUnit, yesNo } from '@/lib/format';
 import { RATING_LABELS, SIZE_LABELS, STATE_NAMES, sizeClass } from '@/lib/resort';
 import type { PassAffiliation, ResortRating, SkiResort, TravelEstimate } from '@/lib/types';
 
@@ -52,7 +52,8 @@ export function ResortDetails({ resort, affiliations, passNames, ratings, travel
           </p>
           {travel && (
             <p className="mt-1 font-medium">
-              {formatMiles(travel.miles)} <span className="font-normal text-muted-foreground">(straight-line)</span>
+              {describeTravel(travel).primary}{' '}
+              <span className="font-normal text-muted-foreground">({describeTravel(travel).detail})</span>
             </p>
           )}
         </div>

@@ -98,8 +98,14 @@ export type ResortRating = {
 
 export type TravelEstimate = {
   resortId: string;
+  /** Road miles for 'routing'; straight-line miles otherwise. */
   miles: number;
-  /** Only populated by a routing provider. */
+  /** Driving minutes: from a routing provider, or a rough estimate. */
   minutes?: number;
-  method: 'straight-line' | 'routing';
+  /**
+   * 'routing': road distance and time from a routing API.
+   * 'estimated': straight-line miles with a rough drive-time estimate.
+   * 'straight-line': distance only.
+   */
+  method: 'straight-line' | 'estimated' | 'routing';
 };

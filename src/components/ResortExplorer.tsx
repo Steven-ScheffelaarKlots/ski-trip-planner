@@ -22,6 +22,7 @@ import { CURRENT_SEASON } from '@/lib/config';
 import { applyFilters } from '@/lib/filters/apply';
 import { buildFilters } from '@/lib/filters/definitions';
 import type { FilterContext } from '@/lib/filters/types';
+import { travelNote } from '@/lib/format';
 import { affiliationsFor, buildPassIndex } from '@/lib/resort';
 import { sortResorts, type SortKey } from '@/lib/sort';
 
@@ -58,6 +59,7 @@ export default function ResortExplorer() {
       location={userLocation.location}
       error={userLocation.error}
       locating={userLocation.locating}
+      note={travelNote(travel)}
       onZip={userLocation.setFromZip}
       onLocate={userLocation.locate}
       onClear={userLocation.clear}

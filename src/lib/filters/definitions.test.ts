@@ -36,7 +36,7 @@ describe('buildFilters', () => {
       'state',
       'pass',
       'size',
-      'distance',
+      'driveTime',
       'vertical',
       'trails',
       'acres',
@@ -61,7 +61,7 @@ describe('buildFilters', () => {
     expect(byId<RangeFilterDef>('vertical').max).toBe(3100);
     expect(byId<RangeFilterDef>('trails').max).toBe(155);
     expect(byId<RangeFilterDef>('acres').max).toBe(1550);
-    expect(byId<RangeFilterDef>('distance')).toMatchObject({ max: 300, mode: 'max', requiresLocation: true });
+    expect(byId<RangeFilterDef>('driveTime')).toMatchObject({ unit: 'h', max: 6, step: 0.5, mode: 'max', requiresLocation: true });
   });
 
   it('filters by state, pass, size, and toggles', () => {
@@ -71,5 +71,17 @@ describe('buildFilters', () => {
     expect(ids({ nightSkiing: true })).toEqual(['ma']);
     expect(ids({ beginnerTerrain: true })).toEqual(['ma']);
     expect(ids({ expertTerrain: true })).toEqual(['vt']);
+  });
+
+  it('filters by drive time in hours using estimated minutes', () => {
+    const withTravel: FilterContext = {
+      ...ctx,
+      travel: new Map([
+        ['vt', { resortId: 'vt', miles: 118, minutes: 165, method: 'routing' }],
+        ['ma', { resortId: 'ma', miles: 31, minutes: 45, method: 'routing' }],
+      ]),
+    };
+    const result = applyFilters([vt, ma], defs, { driveTime: [0, 2] }, withTravel);
+    expect(result.map((r) => r.id)).toEqual(['ma']);
   });
 });

@@ -54,7 +54,7 @@ function RangeControl({ def, value, onChange, disabled }: {
         aria-label={def.label}
       />
       {disabled ? (
-        <p className="mt-1 text-xs text-muted-foreground">Set your location to filter by distance.</p>
+        <p className="mt-1 text-xs text-muted-foreground">Set your location to filter by drive time.</p>
       ) : (
         def.description && <p className="mt-1 text-xs text-muted-foreground">{def.description}</p>
       )}

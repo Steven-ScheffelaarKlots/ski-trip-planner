@@ -3,7 +3,7 @@ import type { SkiResort, TravelEstimate } from '@/lib/types';
 export type SortKey = 'distance' | 'vertical' | 'trails' | 'name';
 
 export const SORT_LABELS: Record<SortKey, string> = {
-  distance: 'Distance',
+  distance: 'Drive time',
   vertical: 'Vertical drop',
   trails: 'Trail count',
   name: 'Name',
@@ -31,7 +31,7 @@ export function sortResorts(
   const list = [...resorts];
   switch (key) {
     case 'distance':
-      return travel.size === 0 ? list.sort(byName) : list.sort(byNumber((r) => travel.get(r.id)?.miles, 1));
+      return travel.size === 0 ? list.sort(byName) : list.sort(byNumber((r) => travel.get(r.id)?.minutes ?? travel.get(r.id)?.miles, 1));
     case 'vertical':
       return list.sort(byNumber((r) => r.stats.verticalFt, -1));
     case 'trails':

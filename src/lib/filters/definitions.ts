@@ -6,7 +6,7 @@ import type { Pass, SkiResort, StateCode } from '@/lib/types';
 const STATE_ORDER: StateCode[] = ['VT', 'NH', 'ME', 'MA', 'CT', 'RI'];
 const SIZE_ORDER: SizeClass[] = ['small', 'medium', 'large'];
 
-const MAX_DISTANCE_MI = 300;
+const MAX_DRIVE_HOURS = 6;
 
 function dataMax(resorts: SkiResort[], get: (r: SkiResort) => number | undefined, step: number): number {
   const values = resorts.map(get).filter((v): v is number => v !== undefined);
@@ -59,17 +59,20 @@ export function buildFilters(resorts: SkiResort[], passes: Pass[]): FilterDefini
       },
     },
     {
-      id: 'distance',
-      label: 'Max distance',
-      description: 'Straight-line from your location',
+      id: 'driveTime',
+      label: 'Max drive time',
+      description: 'Estimated driving time from your location',
       control: 'range',
-      unit: 'mi',
+      unit: 'h',
       min: 0,
-      max: MAX_DISTANCE_MI,
-      step: 10,
+      max: MAX_DRIVE_HOURS,
+      step: 0.5,
       mode: 'max',
       requiresLocation: true,
-      getValue: (r, ctx) => ctx.travel.get(r.id)?.miles,
+      getValue: (r, ctx) => {
+        const minutes = ctx.travel.get(r.id)?.minutes;
+        return minutes === undefined ? undefined : minutes / 60;
+      },
     },
     statRange(resorts, 'vertical', 'Vertical drop', 'ft', 100, (r) => r.stats.verticalFt),
     statRange(resorts, 'trails', 'Trail count', 'trails', 5, (r) => r.stats.trailCount),

@@ -1,0 +1,22 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm install 22
+        - npm ci
+    build:
+      commands:
+        # Amplify console env vars aren't visible to the Next.js server at runtime unless written here.
+        # Never prefix the key with NEXT_PUBLIC_ (that would ship it to browsers).
+        # `|| true`: the build still succeeds before the key is configured (drive times fall back to estimates).
+        - env | grep -e ORS_API_KEY >> .env.production || true
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
+      - .next/cache/**/*

@@ -34,6 +34,15 @@ describe('sortResorts', () => {
     expect(ids(sortResorts(resorts, 'distance', travel))).toEqual(['b', 'c', 'a']);
   });
 
+  it('sorts by drive minutes when available, even if miles disagree', () => {
+    const timed = new Map<string, TravelEstimate>([
+      ['a', { resortId: 'a', miles: 90, minutes: 80, method: 'routing' }],
+      ['b', { resortId: 'b', miles: 30, minutes: 120, method: 'routing' }],
+      ['c', { resortId: 'c', miles: 60, minutes: 100, method: 'routing' }],
+    ]);
+    expect(ids(sortResorts(resorts, 'distance', timed))).toEqual(['a', 'c', 'b']);
+  });
+
   it('falls back to name when sorting by distance without a location', () => {
     expect(ids(sortResorts(resorts, 'distance', EMPTY_TRAVEL))).toEqual(['a', 'b', 'c']);
   });

@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/badge';
-import { formatMiles, withUnit } from '@/lib/format';
+import { describeTravel, withUnit } from '@/lib/format';
 import type { PassId, SkiResort, TravelEstimate } from '@/lib/types';
 
 type Props = {
@@ -23,7 +23,7 @@ export function ResortCard({ resort, selected, onSelect, travel, passIds, passNa
     >
       <div className="flex items-baseline justify-between gap-2">
         <span className="font-medium">{resort.name}</span>
-        {travel && <span className="shrink-0 text-xs text-muted-foreground">{formatMiles(travel.miles)}</span>}
+        {travel && <span className="shrink-0 text-xs text-muted-foreground">{describeTravel(travel).primary}</span>}
       </div>
       <div className="text-xs text-muted-foreground">
         {resort.location.state} · {withUnit(resort.stats.verticalFt, 'ft vert')} · {withUnit(resort.stats.trailCount, 'trails')}

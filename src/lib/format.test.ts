@@ -1,5 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { formatCoords, formatMiles, formatNumber, passAccessLabel, withUnit, yesNo } from '@/lib/format';
+import {
+  describeTravel,
+  formatCoords,
+  formatDuration,
+  formatMiles,
+  formatNumber,
+  passAccessLabel,
+  travelNote,
+  withUnit,
+  yesNo,
+} from '@/lib/format';
+import type { TravelEstimate } from '@/lib/types';
 
 const src = { label: 's', url: 'https://example.com', retrievedAt: '2026-10-08' };
 
@@ -31,5 +42,38 @@ describe('format', () => {
     expect(yesNo(true)).toBe('Yes');
     expect(yesNo(false)).toBe('No');
     expect(yesNo(undefined)).toBe('Unknown');
+  });
+});
+
+describe('drive time formatting', () => {
+  it('formats minutes as hours and minutes', () => {
+    expect(formatDuration(45)).toBe('45 min');
+    expect(formatDuration(60)).toBe('1 h');
+    expect(formatDuration(165)).toBe('2 h 45 min');
+  });
+
+  it('describes routed, estimated, and straight-line travel', () => {
+    expect(describeTravel({ resortId: 'a', miles: 152.4, minutes: 165, method: 'routing' })).toEqual({
+      primary: '2 h 45 min',
+      detail: '152 mi by road',
+    });
+    expect(describeTravel({ resortId: 'a', miles: 118.2, minutes: 161, method: 'estimated' })).toEqual({
+      primary: '~2 h 41 min',
+      detail: 'rough estimate · 118 mi straight-line',
+    });
+    expect(describeTravel({ resortId: 'a', miles: 118.2, method: 'straight-line' })).toEqual({
+      primary: '118 mi',
+      detail: 'straight-line',
+    });
+  });
+
+  it('summarizes where drive times come from', () => {
+    const routed: TravelEstimate = { resortId: 'a', miles: 1, minutes: 1, method: 'routing' };
+    const rough: TravelEstimate = { resortId: 'b', miles: 1, minutes: 1, method: 'estimated' };
+    expect(travelNote(new Map())).toBeUndefined();
+    expect(travelNote(new Map([['b', rough]]))).toBe('Drive times are rough estimates based on straight-line distance.');
+    expect(travelNote(new Map([['a', routed], ['b', rough]]))).toBe(
+      'Drive times by road from OpenRouteService; traffic not included.',
+    );
   });
 });
