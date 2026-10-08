@@ -1,3 +1,336 @@
-import type { SkiResort } from '@/lib/types';
+import type { SkiResort, SourceRef } from '@/lib/types';
 
-export const NEW_HAMPSHIRE_RESORTS: SkiResort[] = [];
+const RETRIEVED = '2026-10-08';
+const wiki = (article: string): SourceRef => ({
+  label: 'Wikipedia',
+  url: `https://en.wikipedia.org/wiki/${article}`,
+  retrievedAt: RETRIEVED,
+});
+const page = (label: string, url: string): SourceRef => ({ label, url, retrievedAt: RETRIEVED });
+const osm = (label: string, url: string): SourceRef => page(`OpenStreetMap (${label})`, url);
+
+export const NEW_HAMPSHIRE_RESORTS: SkiResort[] = [
+  {
+    id: 'bretton-woods',
+    name: 'Bretton Woods',
+    location: { state: 'NH', town: 'Bretton Woods', lat: 44.2597, lng: -71.4622 },
+    stats: {
+      trailCount: 102,
+      skiableAcres: 468,
+      verticalFt: 1500,
+      summitElevationFt: 3100,
+      baseElevationFt: 1600,
+      liftCount: 9,
+    },
+    terrain: { basis: 'trails', beginner: 25, intermediate: 29, advanced: 46 },
+    features: { nightSkiing: false, snowmakingPercent: 92 },
+    links: {
+      website: 'https://www.brettonwoods.com',
+      trailMaps: [{ url: 'https://www.brettonwoods.com/plan-visit/maps/?map-id=2286', kind: 'page', license: 'link-only' }],
+    },
+    description: 'Ski area across from the Omni Mount Washington Resort, below the Presidential Range.',
+    meta: { lastVerified: RETRIEVED, sources: [wiki('Bretton_Woods_Mountain_Resort')] },
+  },
+  {
+    id: 'loon',
+    name: 'Loon Mountain',
+    location: { state: 'NH', town: 'Lincoln', lat: 44.036, lng: -71.6214 },
+    stats: { trailCount: 73, skiableAcres: 403, verticalFt: 2100, summitElevationFt: 3050, baseElevationFt: 950 },
+    features: {},
+    links: { website: 'https://www.loonmtn.com' },
+    description: 'Three-peak resort off I-93 in Lincoln. Owned by Boyne Resorts.',
+    meta: {
+      lastVerified: RETRIEVED,
+      sources: [
+        page('OnTheSnow', 'https://www.onthesnow.com/new-hampshire/loon-mountain/ski-resort.html'),
+        wiki('Loon_Mountain'),
+      ],
+    },
+  },
+  {
+    id: 'cannon',
+    name: 'Cannon Mountain',
+    location: { state: 'NH', town: 'Franconia', lat: 44.1578, lng: -71.6989 },
+    stats: {
+      trailCount: 73,
+      skiableAcres: 265,
+      verticalFt: 2230,
+      summitElevationFt: 4080,
+      baseElevationFt: 1850,
+      liftCount: 10,
+    },
+    terrain: { basis: 'trails', beginner: 21, intermediate: 47, advanced: 32 },
+    features: { nightSkiing: false, snowmakingPercent: 64 },
+    links: {
+      website: 'https://www.cannonmt.com',
+      trailMaps: [{ url: 'https://www.cannonmt.com/trail-map', kind: 'page', license: 'link-only' }],
+    },
+    description: 'State-owned ski area in Franconia Notch State Park with an aerial tramway.',
+    meta: { lastVerified: RETRIEVED, sources: [wiki('Cannon_Mountain_Ski_Area')] },
+  },
+  {
+    id: 'waterville-valley',
+    name: 'Waterville Valley',
+    location: { state: 'NH', town: 'Waterville Valley', lat: 43.9653, lng: -71.5278 },
+    stats: { trailCount: 62, skiableAcres: 265, verticalFt: 2020, summitElevationFt: 4004, liftCount: 10 },
+    terrain: { basis: 'trails', beginner: 15, intermediate: 59, advanced: 23, expert: 3 },
+    features: { snowmakingPercent: 100 },
+    links: { website: 'https://www.waterville.com' },
+    description: 'Ski resort on Mount Tecumseh in the White Mountains.',
+    meta: {
+      lastVerified: RETRIEVED,
+      sources: [
+        page('Waterville Valley mountain stats', 'https://www.waterville.com/mountain-stats'),
+        wiki('Waterville_Valley_Resort'),
+      ],
+    },
+  },
+  {
+    id: 'wildcat',
+    name: 'Wildcat Mountain',
+    location: { state: 'NH', town: 'Jackson', lat: 44.2631, lng: -71.2383 },
+    stats: {
+      trailCount: 49,
+      skiableAcres: 225,
+      verticalFt: 2112,
+      summitElevationFt: 4062,
+      baseElevationFt: 1950,
+      liftCount: 5,
+    },
+    terrain: { basis: 'trails', beginner: 25, intermediate: 45, advanced: 30 },
+    features: { snowmakingPercent: 90 },
+    links: {
+      website: 'https://www.skiwildcat.com',
+      trailMaps: [
+        { url: 'https://www.skiwildcat.com/the-mountain/about-the-mountain/trail-map.aspx', kind: 'page', license: 'link-only' },
+      ],
+    },
+    description: 'Ski area in Pinkham Notch facing Mount Washington. Owned by Vail Resorts.',
+    meta: { lastVerified: RETRIEVED, sources: [wiki('Wildcat_Mountain_Ski_Area')] },
+  },
+  {
+    id: 'attitash',
+    name: 'Attitash',
+    location: { state: 'NH', town: 'Bartlett', lat: 44.0822, lng: -71.2297 },
+    stats: {
+      trailCount: 68,
+      skiableAcres: 311,
+      verticalFt: 1750,
+      summitElevationFt: 2350,
+      baseElevationFt: 600,
+      liftCount: 8,
+    },
+    terrain: { basis: 'trails', beginner: 29, intermediate: 44, advanced: 27 },
+    features: { snowmakingPercent: 98 },
+    links: {
+      website: 'https://www.attitash.com',
+      trailMaps: [
+        { url: 'https://www.attitash.com/the-mountain/about-the-mountain/trail-maps.aspx', kind: 'page', license: 'link-only' },
+      ],
+    },
+    description: 'Two-mountain resort (Attitash and Bear Peak) in the Mount Washington Valley. Owned by Vail Resorts.',
+    meta: { lastVerified: RETRIEVED, sources: [wiki('Attitash_Mountain_Resort')] },
+  },
+  {
+    id: 'gunstock',
+    name: 'Gunstock',
+    location: { state: 'NH', town: 'Gilford', lat: 43.5414, lng: -71.3675 },
+    stats: { trailCount: 44, verticalFt: 1340, summitElevationFt: 2267, baseElevationFt: 867, liftCount: 9 },
+    terrain: { basis: 'trails', beginner: 15, intermediate: 52, advanced: 31, expert: 2 },
+    features: { nightSkiing: true, snowmakingPercent: 98 },
+    links: {
+      website: 'https://www.gunstock.com',
+      trailMaps: [{ url: 'https://www.gunstock.com/winter/trail-map/', kind: 'page', license: 'link-only' }],
+    },
+    description: 'County-owned ski area overlooking Lake Winnipesaukee, with night skiing.',
+    meta: { lastVerified: RETRIEVED, sources: [wiki('Gunstock_Mountain_Resort')] },
+  },
+  {
+    id: 'pats-peak',
+    name: 'Pats Peak',
+    location: { state: 'NH', town: 'Henniker', lat: 43.1633, lng: -71.7958 },
+    stats: {
+      trailCount: 28,
+      skiableAcres: 103,
+      verticalFt: 770,
+      summitElevationFt: 1460,
+      baseElevationFt: 690,
+      liftCount: 11,
+    },
+    terrain: { basis: 'trails', beginner: 50, intermediate: 21, advanced: 12, expert: 17 },
+    features: { nightSkiing: true },
+    links: { website: 'https://www.patspeak.com' },
+    description: 'Family-owned ski area west of Concord, with night skiing.',
+    meta: { lastVerified: RETRIEVED, sources: [wiki('Pats_Peak')] },
+  },
+  {
+    id: 'mount-sunapee',
+    name: 'Mount Sunapee',
+    location: { state: 'NH', town: 'Newbury', lat: 43.3306, lng: -72.08 },
+    stats: {
+      trailCount: 66,
+      skiableAcres: 230,
+      verticalFt: 1513,
+      summitElevationFt: 2743,
+      baseElevationFt: 1230,
+      liftCount: 10,
+    },
+    terrain: { basis: 'trails', beginner: 26, intermediate: 48, advanced: 26 },
+    features: { snowmakingPercent: 97 },
+    links: {
+      website: 'https://www.mountsunapee.com',
+      trailMaps: [
+        { url: 'https://www.mountsunapee.com/the-mountain/about-the-mountain/trail-maps.aspx', kind: 'page', license: 'link-only' },
+      ],
+    },
+    description: 'Ski area in Mount Sunapee State Park, operated by Vail Resorts under a state lease.',
+    meta: { lastVerified: RETRIEVED, sources: [wiki('Mount_Sunapee_Resort')] },
+  },
+  {
+    id: 'cranmore',
+    name: 'Cranmore',
+    location: { state: 'NH', town: 'North Conway', lat: 44.0564, lng: -71.11 },
+    stats: { trailCount: 56, skiableAcres: 170, verticalFt: 1200, liftCount: 7 },
+    terrain: { basis: 'trails', beginner: 28, intermediate: 46, advanced: 26 },
+    features: { snowmakingPercent: 100 },
+    links: {
+      website: 'https://www.cranmore.com',
+      trailMaps: [{ url: 'https://cranmore.com/trail-map', kind: 'page', license: 'link-only' }],
+    },
+    description: 'Ski area at the edge of North Conway village.',
+    meta: { lastVerified: RETRIEVED, sources: [wiki('Cranmore_Mountain_Resort')] },
+  },
+  {
+    id: 'black-mountain-nh',
+    name: 'Black Mountain',
+    location: { state: 'NH', town: 'Jackson', lat: 44.1683, lng: -71.1644 },
+    stats: { trailCount: 45, verticalFt: 1100, liftCount: 5 },
+    features: { snowmakingPercent: 98 },
+    links: {
+      website: 'https://www.blackmt.com',
+      trailMaps: [{ url: 'https://www.blackmt.com/trail-map', kind: 'page', license: 'link-only' }],
+    },
+    description: 'Small, historic ski area in Jackson village.',
+    meta: { lastVerified: RETRIEVED, sources: [wiki('Black_Mountain_Ski_Area')] },
+  },
+  {
+    id: 'ragged-mountain',
+    name: 'Ragged Mountain',
+    location: { state: 'NH', town: 'Danbury', lat: 43.4844, lng: -71.8422 },
+    stats: {
+      trailCount: 57,
+      skiableAcres: 250,
+      verticalFt: 1250,
+      summitElevationFt: 2286,
+      baseElevationFt: 1000,
+      liftCount: 5,
+    },
+    terrain: { basis: 'trails', beginner: 30, intermediate: 40, advanced: 30 },
+    features: { nightSkiing: false, snowmakingPercent: 85 },
+    links: { website: 'https://www.raggedmountainresort.com' },
+    description: 'Ski area in Danbury, sold to new local owners in November 2025.',
+    meta: {
+      lastVerified: RETRIEVED,
+      sources: [
+        page('OnTheSnow', 'https://www.onthesnow.com/new-hampshire/ragged-mountain-resort/ski-resort.html'),
+        page('SkiNewEngland', 'https://skinewengland.com/ragged-mountain/'),
+        wiki('Ragged_Mountain_Resort'),
+      ],
+    },
+  },
+  {
+    id: 'crotched',
+    name: 'Crotched Mountain',
+    location: { state: 'NH', town: 'Bennington', lat: 43.0081, lng: -71.8788 },
+    stats: {
+      trailCount: 25,
+      skiableAcres: 100,
+      verticalFt: 1016,
+      summitElevationFt: 2066,
+      baseElevationFt: 1050,
+      liftCount: 5,
+    },
+    terrain: { basis: 'trails', beginner: 28, intermediate: 40, advanced: 32 },
+    features: { nightSkiing: true, snowmakingPercent: 100 },
+    links: {
+      website: 'https://www.crotchedmtn.com',
+      trailMaps: [
+        { url: 'https://www.crotchedmtn.com/the-mountain/about-the-mountain/trail-maps.aspx', kind: 'page', license: 'link-only' },
+      ],
+    },
+    description: 'Southern New Hampshire ski area with fully lit night skiing. Owned by Vail Resorts.',
+    meta: {
+      lastVerified: RETRIEVED,
+      sources: [
+        page('Crotched Mountain info', 'https://www.crotchedmtn.com/the-mountain/about-the-mountain/mountain-info.aspx'),
+        page('OnTheSnow', 'https://www.onthesnow.com/new-hampshire/crotched-mountain/ski-resort'),
+        osm('coordinates', 'https://nominatim.openstreetmap.org/search?q=Crotched+Mountain+Ski+%26+Ride'),
+      ],
+    },
+  },
+  {
+    id: 'tenney',
+    name: 'Tenney Mountain',
+    location: { state: 'NH', town: 'Plymouth', lat: 43.7378, lng: -71.7836 },
+    stats: { trailCount: 53, skiableAcres: 130, verticalFt: 1500, liftCount: 4 },
+    terrain: { basis: 'trails', beginner: 23, intermediate: 50, advanced: 27 },
+    features: { nightSkiing: false },
+    links: {
+      website: 'https://skitenney.com',
+      trailMaps: [{ url: 'https://skitenney.com/trail-map/', kind: 'page', license: 'link-only' }],
+    },
+    description: 'Ski area west of Plymouth in the Baker River valley.',
+    meta: {
+      lastVerified: RETRIEVED,
+      sources: [page('Indy Pass: Tenney Mountain', 'https://indyskipass.com/our-resorts/tenney-mountain'), wiki('Tenney_Mountain')],
+    },
+  },
+  {
+    id: 'whaleback',
+    name: 'Whaleback',
+    location: { state: 'NH', town: 'Enfield', lat: 43.6014, lng: -72.1814 },
+    stats: {
+      trailCount: 30,
+      skiableAcres: 85,
+      verticalFt: 700,
+      summitElevationFt: 1800,
+      baseElevationFt: 1100,
+      liftCount: 4,
+    },
+    features: { nightSkiing: true },
+    links: {
+      website: 'https://www.whaleback.com',
+      trailMaps: [{ url: 'https://www.whaleback.com/trail-map', kind: 'page', license: 'link-only' }],
+    },
+    description:
+      'Nonprofit ski area in the Upper Valley. Its chairlift broke during the 2024-25 season and was not ready for the start of 2025-26; check the resort for current lift status.',
+    meta: {
+      lastVerified: RETRIEVED,
+      sources: [wiki('Whaleback_(ski_area)'), page('SkiNH: Whaleback', 'https://www.skinh.com/resorts/whaleback-mountain')],
+    },
+  },
+  {
+    id: 'dartmouth-skiway',
+    name: 'Dartmouth Skiway',
+    location: { state: 'NH', town: 'Lyme', lat: 43.7879, lng: -72.0943 },
+    stats: {
+      trailCount: 30,
+      skiableAcres: 100,
+      verticalFt: 968,
+      summitElevationFt: 1943,
+      baseElevationFt: 975,
+      liftCount: 3,
+    },
+    terrain: { basis: 'trails', beginner: 25, intermediate: 50, advanced: 25 },
+    features: { nightSkiing: false, snowmakingPercent: 70 },
+    links: { website: 'https://skiway.dartmouth.edu' },
+    description: 'Ski area owned and operated by Dartmouth College.',
+    meta: {
+      lastVerified: RETRIEVED,
+      sources: [
+        wiki('Dartmouth_Skiway'),
+        osm('coordinates', 'https://nominatim.openstreetmap.org/search?q=Dartmouth+Skiway'),
+      ],
+    },
+  },
+];

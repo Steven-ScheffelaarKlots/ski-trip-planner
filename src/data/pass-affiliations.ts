@@ -46,11 +46,17 @@ export const PASS_AFFILIATIONS: PassAffiliation[] = [
   days('killington', 'ikon', 7, IKON, 'Shared with Pico'),
   days('pico', 'ikon', 7, IKON, 'Shared with Killington'),
   days('sunday-river', 'ikon', 7, IKON),
+  days('loon', 'ikon', 7, IKON),
+  days('cranmore', 'ikon', 2, IKON, 'Bonus mountain'),
 
   // Epic Pass
   unlimited('stowe', 'epic', EPIC),
   unlimited('okemo', 'epic', EPIC),
   unlimited('mount-snow', 'epic', EPIC),
+  unlimited('wildcat', 'epic', EPIC),
+  unlimited('attitash', 'epic', EPIC),
+  unlimited('mount-sunapee', 'epic', EPIC),
+  unlimited('crotched', 'epic', EPIC),
 
   // Indy Pass
   days('bolton-valley', 'indy', 2, INDY, INDY_NOTES),
@@ -58,5 +64,14 @@ export const PASS_AFFILIATIONS: PassAffiliation[] = [
   days('jay-peak', 'indy', 2, INDY, INDY_NOTES),
   days('magic-mountain', 'indy', 2, INDY, INDY_NOTES),
   days('middlebury-snow-bowl', 'indy', 2, INDY, INDY_NOTES),
+  days('saskadena-six', 'indy', 2, INDY, INDY_NOTES),
   days('smugglers-notch', 'indy', 2, INDY_2627_ADDITIONS, INDY_NOTES),
+  days('black-mountain-nh', 'indy', 2, INDY, INDY_NOTES),
+  days('cannon', 'indy', 2, INDY, INDY_NOTES),
+  days('dartmouth-skiway', 'indy', 2, INDY, INDY_NOTES),
+  days('pats-peak', 'indy', 2, INDY, INDY_NOTES),
+  days('ragged-mountain', 'indy', 2, INDY, INDY_NOTES),
+  days('tenney', 'indy', 2, INDY, INDY_NOTES),
+  days('waterville-valley', 'indy', 2, INDY, INDY_NOTES),
+  days('whaleback', 'indy', 2, INDY, INDY_NOTES),
 ];
