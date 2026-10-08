@@ -5,7 +5,7 @@ export function formatNumber(n?: number): string {
 }
 
 export function withUnit(n: number | undefined, unit: string): string {
-  return n === undefined ? '—' : `${formatNumber(n)} ${unit}`;
+  return n === undefined ? '—' : `${formatNumber(n)} ${unit}`.trim();
 }
 
 export function formatMiles(miles: number): string {

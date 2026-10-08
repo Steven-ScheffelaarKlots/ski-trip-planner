@@ -42,3 +42,6 @@ next-env.d.ts
 
 # superpowers execution workspace
 /.superpowers/
+
+# copied from node_modules by `npm run copy-map-worker`
+/public/maplibre-gl-worker.mjs

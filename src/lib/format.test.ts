@@ -9,6 +9,7 @@ describe('format', () => {
     expect(formatNumber(undefined)).toBe('—');
     expect(withUnit(1509, 'acres')).toBe('1,509 acres');
     expect(withUnit(undefined, 'ft')).toBe('—');
+    expect(withUnit(155, '')).toBe('155');
   });
 
   it('rounds miles', () => {
